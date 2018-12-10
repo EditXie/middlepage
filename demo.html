@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" >
+    <title>superH5</title>
+</head>
+<style type="text/css">
+ 
+ 
+ 
+ 
+    #tool {
+        width: 100%;
+        height: 120px;
+ 
+        text-align: center;
+    }
+ 
+    #bd {
+        width: 100%;
+        height: 500px;
+ 
+    }
+ 
+    #option {
+        position: relative;
+        width: 300px;
+        height: 500px;
+ 
+        left: 65%;
+        top: -505px;
+    }
+ 
+    #bc {
+        position: relative;
+        width: 166px;
+        height: 500px;
+ 
+ 
+        left: 87.5%;
+        top: -1007px;
+    }
+ 
+    body {
+        background-color: cornsilk;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+</style>
+<script language="JavaScript" src="superMaker.js"></script>
+<script type="text/javascript">
+ 
+ 
+var background="";
+ 
+ 
+ 
+new Stage(880, 500, "", 'stage',background);
+ 
+var gjcmd = "";
+new Tool();
+var id = 0;
+var p3 = new player("img");
+p3.image.src = "zuotb.png"
+p3.x = 10;
+p3.y = 5;
+p3.w = 45;
+p3.h = 26;
+var p4 = new player("img");
+p4.image.src = "youtb.png"
+p4.x = 55;
+p4.y = 5;
+p4.w = 45;
+p4.h = 26;
+var p5 = new player("img");
+p5.image.src = "frame.png"
+p5.x = 10;
+p5.y = 30;
+p5.w = 15;
+p5.h = 30;
+var p5kg = false;
+Tool.add(p3);
+Tool.add(p4);
+Tool.add(p5);
+p3.mousedown = function () {
+    if (p3.x > 10) {
+        if (scaneArray.length > 0) {
+ 
+            if (toolArray.length > 4) {
+ 
+                if (p5.x == toolArray[toolArray.length - 1].x) {
+ 
+                    p5.x += -15;
+ 
+ 
+                }
+            }
+ 
+            p4.x += -15;
+            p3.x += -15;
+            id--;
+            Stage.findScane(id+"s").layer.clear();
+            Stage.removeScane(id + "s");
+            Tool.remove(id + "p");
+ 
+ 
+        }
+ 
+ 
+    }
+}
+p4.mousedown = function () {
+    if (p4.x < 850) {
+        p3.x += 15;
+        p4.x += 15;
+        var p51 = new player("img");
+        p51.image.src = "frame1.png"
+        p51.x = 10 + 15 * id;
+        p51.y = 5;
+        p51.w = 15;
+        p51.h = 20;
+        p51.id = id + "p";
+        Tool.add(p51);
+        var sc = new Scane();
+        sc.id = id + "s";
+        sc.playflag = false;
+        sc.loopflag = true;
+        id++;
+    }
+}
+var jsd=0;
+var lfx="";
+ 
+Stage.leftKey = function () {
+    jsd+=-5;
+    if (p5.x > 10) {
+        p5.x += -15;
+    }
+   // alert( $s("ycmb").style.left)
+lfx=200+jsd+"px";
+    $s("ycmb").style.left=lfx;
+}
+Stage.rightKey = function () {
+    jsd+=5;
+    if (p5.x < (toolArray.length - 4) * 15 + 10) {
+        p5.x += 15;
+    }
+ 
+    lfx=200+jsd+"px";
+    $s("ycmb").style.left=lfx;
+}
+var jsp1=0
+var mgt=new Image();
+mgt.src="a.jpg";
+mgt.height=100;
+mgt.width=100;
+var ppp=new point(320,320);
+Stage.update = function () {
+jsp1++;
+ 
+  //  var ft1=Draw.filterX(canvas,new point(0,0),new point(170,0),[new ca(0,"red"),new ca(0.5,"yellow"),new ca(0.6,"blue")]);
+//Draw.line(canvas,20,ft1,new point(0,0),new point(200,300));
+    //Draw.word(canvas,true,ft1,"helloword",150,50,30,"Times New Roman","center",true);
+ 
+   // var ft1=Draw.filterX(canvas,new point(0,0),new point(170,0),[new ca(0,"red"),new ca(0.5,"yellow"),new ca(1,"blue")]);
+// Draw.fillShape(canvas,[new point(50,50,50,50),new point(50,100,50,50),new point(100,100,50,50),new point(100,50,50,50),new point(0,0,50,50)],"blue",0,ft1)
+ 
+ 
+  //  Draw.shape("canvas",[new point(50,50,50,50),new point(50,100,50,50),new point(100,100,50,50),new point(100,50,50,50),new point(0,0,50,50)],ft1,23);
+ 
+    playp5();
+ 
+    DrawTools("timeline", "line", 3, "red", new Array(10, 16, 880, 16));
+    DrawTools("timeline", "line", 3, "red", new Array(10, 55, 880, 55));
+    DrawTools("timeline", "rect", 1, "red", new Array(0, 15, 10, 100));
+    DrawTools("timeline", "rect", 1, "red", new Array(870, 15, 10, 100));
+    for (var i = 0; i < 58; i++) {
+        DrawTools("timeline", "rect", 1, "red", new Array(10 + i * 15, 30, 15, 60));
+ 
+    }
+ 
+ 
+}
+ 
+ 
+var kg = false;
+ 
+function enterm(e) {
+ 
+    e.style.height = "35px";
+ 
+}
+ 
+function outm(e) {
+ 
+    e.style.height = "30px";
+}
+ 
+ 
+function playp5() {
+ 
+    if (scaneArray.length > 0) {
+        for (var k in scaneArray) {
+            if (scaneArray[k].id == ((p5.x - 10) / 15) + "s") {
+                scaneArray[k].playflag = true;
+                scaneArray[k].layer.show();
+            } else {
+ 
+                scaneArray[k].playflag = false;
+ 
+                if(scaneArray[k].layer!=null){
+                scaneArray[k].layer.hides();
+            }
+            }
+        }
+    }
+ 
+ 
+}
+ function djiframe(e){
+     e.src="http://www.baidu.com"
+     e.style.backgroundColor="red";
+     e.style.padding="5px";
+ 
+ 
+ 
+ }
+ 
+//当前场景
+var tps = 0;
+var seleid;
+function djsj(e) {
+    e.style.height = "38px";
+    if (e.id == "tp") {
+        if (scaneArray.length > 0) {
+            tps += 1;
+            var p1 = new player("img")
+            p1.image.src = "b.jpg";
+            p1.x = 100;
+            p1.y = 100;
+            p1.w = 100;
+            p1.h = 100;
+            p1.id = tps + "pic";
+            p1.testx=120;
+            p1.testy=110;
+ 
+            alert(Stage.findScane(((p5.x - 10) / 15) + "s"))
+ 
+            Stage.findScane(((p5.x - 10) / 15) + "s").addplayer(p1);
+            p1.mousedown = function (e) {
+ 
+ 
+                Stage.findScane(((p5.x - 10) / 15) + "s").layer.top(p1);
+ 
+                if(gjcmd=!""){
+ 
+                    if (p1.editflag == false) {
+ 
+                        p1.editflag = true;
+ 
+                    } else {
+                        p1.editflag = false;
+                        gjcmd = "";
+ 
+                    }
+ 
+                }
+ 
+ 
+            }
+ 
+ 
+ 
+            p1.mousemove = function (e) {
+                if(gjcmd=="yd"&&p1.editflag) {
+                        p1.x = getMousePos(canvas, e).x-p1.w/2;
+                        p1.y = getMousePos(canvas, e).y- p1.h/2;
+                }
+                if(gjcmd=="xz"&&p1.editflag) {
+                 var vsx  = getMousePos(canvas, e).x-p1.x-p1.w/2;
+                  var vsy=  getMousePos(canvas, e).y-p1.y-p1.h/2;
+                    p1.rotate=Math.atan2(vsy,vsx)*180/Math.PI;
+                    p1.testx=getMousePos(canvas,e).x;
+                    p1.testy=getMousePos(canvas,e).y;
+ 
+                }
+ 
+                if(gjcmd=="sf"&&p1.editflag) {
+ 
+                    var vsx1  = Math.abs(getMousePos(canvas, e).x-(p1.x-p1.w/2));
+;                    var vsy1=  Math.abs(getMousePos(canvas, e).y-(p1.y-p1.h/2));
+ 
+ 
+                        p1.w = vsx1;
+                        p1.h = vsy1;
+ 
+                }
+ 
+                if(gjcmd=="sc"&&p1.editflag) {
+ 
+                    //alert(Stage.findScane(((p5.x - 10) / 15) + "s").layer.array);
+                    Stage.findScane(((p5.x - 10) / 15) + "s").layer.remove(p1);
+                }
+ 
+                if(gjcmd=="yy"&&p1.editflag) {
+ 
+                    p1.shadow.color="red";
+                    p1.shadow.blur=Math.floor(getMousePos(canvas, e).x-p1.x);
+                    console.log(p1.shadow.blur);
+                }
+ 
+            }
+ 
+        }
+ 
+    }
+ 
+}
+ 
+ 
+/**
+ *
+ * 设置背景颜色
+ * @param e
+ */
+function ysz(e) {
+    $s("tst").innerHTML = '<input type="color"   onchange="ysz(this);"/>' + e.value;
+    $s("tst").style.backgroundColor = e.value;
+ 
+    Stage.background= e.value;
+ 
+ 
+ 
+ 
+}
+ 
+ 
+var pickjid=0;
+/**
+ *
+ * 点击工具栏效果
+ */
+ 
+function kkkk(pcp){
+    pcp.editflag = false;
+    gjcmd = ""
+ 
+}
+function djgj(e) {
+pickjid++;
+    if (e.value == "移动") {
+        gjcmd = "yd";
+ 
+    } else if (e.value == "旋转") {
+        gjcmd = "xz";
+    } else if (e.value == "缩放") {
+        gjcmd = "sf";
+    } else if (e.value == "删除") {
+        gjcmd = "sc";
+ 
+    } else if (e.value == "阴影") {
+ 
+        gjcmd = "yy";
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    } else if(e.value=="图片"){
+ 
+        var pcp=new player("pickj");
+        pcp.id=pickjid+"pickj";
+         pcp.img=new Image();
+        pcp.img.src="b.jpg";
+        pcp.img.width=100;
+        pcp.img.height=100;
+        pcp.canId=pickjid+"cs";
+        pcp.targetId="stage";
+        pcp.x=200;
+        pcp.y=200;
+        Stage.findScane(((p5.x - 10) / 15) + "s").addplayer(pcp);
+          pcp.mousedown=function (e) {
+            Stage.findScane(((p5.x - 10) / 15) + "s").layer.top(pcp);
+            if(gjcmd=!""){
+ 
+                if (pcp.editflag == false) {
+ 
+                    pcp.editflag = true;
+ 
+                } else {
+                 kkkk(pcp);
+             alert(pcp.x+":x"+pcp.y+":y"+pcp.w+"W:pcp"+pcp.h+"H:pcp"+$s(pcp.canId).width+"宽"+$s(pcp.canId).height);
+ 
+ 
+                }
+ 
+            }
+ 
+ 
+        }
+ 
+ 
+ 
+        pcp.mousemove = function (e) {
+            if(gjcmd=="yd"&&pcp.editflag) {
+                pcp.x = getMousePos(canvas, e).x-$s(pcp.canId).width/2;
+                pcp.y = getMousePos(canvas, e).y+$s(pcp.canId).height/2;
+ 
+            }
+            if(gjcmd=="xz"&&pcp.editflag) {
+                var vsx  = getMousePos(canvas, e).x-pcp.x-pcp.w/2
+                var vsy=  getMousePos(canvas, e).y-pcp.y+pcp.h/2
+ 
+ 
+                pcp.rotate=Math.atan2(vsy,vsx)*180/Math.PI;
+ 
+            }
+ 
+            if(gjcmd=="sf"&&pcp.editflag) {
+ 
+                var vsx1 = Math.abs((getMousePos($s(pcp.canId), e).x - (pcp.x - $s(pcp.canId).width/2)));
+                var vsy1 = Math.abs((getMousePos($s(pcp.canId), e).y - (pcp.y - $s(pcp.canId).height/2)));
+                      if(vsx>0&vsy>0){
+ 
+                          $s(pcp.canId).width = vsx1;
+                          $s(pcp.canId).height= vsy1;
+ 
+                      }
+ 
+ 
+            }
+ 
+            if(gjcmd=="sc"&&pcp.editflag) {
+ 
+ 
+                Stage.findScane(((p5.x - 10) / 15) + "s").layer.remove(pcp);
+            }
+ 
+        }
+    }else if(e.value=="天气"){
+ 
+        var pcp=new player("weather");
+ 
+        pcp.id=pickjid+"weather";
+        pcp.w=120;
+        pcp.h=130;
+        pcp.x=200;
+        pcp.y=200;
+ 
+        Stage.findScane(((p5.x - 10) / 15) + "s").addplayer(pcp);
+        alert(Stage.findScane(((p5.x - 10) / 15) + "s"));
+ 
+    }
+ 
+ 
+}
+function ycgj() {
+    if ($s("xgid").style.display != "none") {
+        $s("xgid").style.display = "none";
+        $s("fdtool").style.height = "40px";
+    } else {
+ 
+        $s("xgid").style.display = "block";
+        $s("fdtool").style.height = "500px";
+ 
+    }
+}
+    function ycgj1(){
+        if( $s("kjid").style.display!="none") {
+            $s("kjid").style.display = "none";
+            $s("fdtool1").style.height="40px";
+        }else{
+ 
+            $s("kjid").style.display = "block";
+            $s("fdtool1").style.height="500px";
+ 
+        }
+ 
+}
+ 
+ 
+var tuodongkg=false;
+function Drags(e) {
+ 
+        tuodongkg=true;
+ 
+}
+ 
+function tdsf(){
+    tuodongkg=false;
+ 
+}
+function movediv(e){
+ 
+   if(tuodongkg){
+       var ec = event || window.event;
+       e.style.left= ec.pageX-20+"px";
+       e.style.top= ec.pageY-20+"px";
+   }
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+var picshu = 0;
+function yl(e) {
+    if (picshu <= 2) {
+        // 如果浏览器不支持FileReader，则不处理
+ 
+        for (var i = 0; i < e.files.length; i++) {
+            var file = e.files.item(i);
+            var freader = new FileReader();
+            freader.readAsDataURL(file);
+            freader.onload = function (e) {
+                var src = e.target.result;
+                var k = document.createElement("img");
+                k.id = src;
+                k.width = 30;
+                k.height = 30;
+                k.ondblclick = function () {
+                    var node = document.getElementById(src)
+                    node.remove();
+                    picshu += -1;
+                }
+                k.onmouseover = function () {
+                    k.width = 35;
+ 
+                }
+                k.onmouseout = function () {
+                    k.width = 30;
+ 
+                }
+ 
+                k.onclick = function () {
+ 
+                    k.style.border = "1px solid red";
+                    var sxsrc = document.getElementById("sxsrc");
+                    sxsrc.value = k.id;
+                }
+                k.src = src;
+                document.getElementById("tjb").appendChild(k);
+                picshu += 1;
+            }
+        }
+ 
+    } else {
+ 
+        alert("图片数不得超过5张")
+ 
+    }
+ 
+ 
+}
+function tjyj() {
+    if (document.getElementById("sxsrc").value != null && document.getElementById("sxsrc").value != "") {
+        try {
+            if (scaneArray.length > 0) {
+                tps += 1;
+                var p1 = new player("img")
+                p1.image.src=document.getElementById("sxsrc").value;
+                p1.x = 1*document.getElementById("sxx").value;
+                p1.y =1* document.getElementById("sxy").value;
+                p1.w =1* document.getElementById("sxw").value;
+                p1.h =1* document.getElementById("sxh").value;
+ 
+                p1.alphatx=document.getElementById("sxtmd").value;
+                p1.id = tps + "pic";
+                p1.testx=120;
+                p1.testy=110;
+ 
+                alert(Stage.findScane(((p5.x - 10) / 15) + "s"))
+ 
+                Stage.findScane(((p5.x - 10) / 15) + "s").addplayer(p1);
+                p1.mousedown = function (e) {
+                    Stage.findScane(((p5.x - 10) / 15) + "s").layer.top(p1);
+                    if(gjcmd=!""){
+ 
+                        if (p1.editflag == false) {
+ 
+                            p1.editflag = true;
+                        } else {
+                            p1.editflag = false;
+                            gjcmd = "";
+ 
+                        }
+ 
+                    }
+ 
+ 
+                }
+ 
+ 
+ 
+                p1.mousemove = function (e) {
+                    if(gjcmd=="yd"&&p1.editflag) {
+                        p1.x = getMousePos(canvas, e).x-p1.w/2;
+                        p1.y = getMousePos(canvas, e).y- p1.h/2;
+                    }
+                    if(gjcmd=="xz"&&p1.editflag) {
+                        var vsx  = getMousePos(canvas, e).x-p1.x-p1.w/2;
+                        var vsy=  getMousePos(canvas, e).y-p1.y-p1.h/2;
+                        p1.rotate=Math.atan2(vsy,vsx)*180/Math.PI;
+                        p1.testx=getMousePos(canvas,e).x;
+                        p1.testy=getMousePos(canvas,e).y;
+ 
+                    }
+ 
+                    if(gjcmd=="sf"&&p1.editflag) {
+ 
+                        var vsx1  = Math.abs(getMousePos(canvas, e).x-(p1.x-p1.w/2));
+                      var vsy1=  Math.abs(getMousePos(canvas, e).y-(p1.y-p1.h/2));
+ 
+ 
+                        p1.w = vsx1;
+                        p1.h = vsy1;
+ 
+                    }
+ 
+                    if(gjcmd=="sc"&&p1.editflag) {
+ 
+                        //alert(Stage.findScane(((p5.x - 10) / 15) + "s").layer.array);
+                        Stage.findScane(((p5.x - 10) / 15) + "s").layer.remove(p1);
+                    }
+ 
+ 
+ 
+                }
+ 
+            }
+ 
+        } catch (e) {
+            alert("添加不成功，请检查填写内容后重试！" + e.description)
+ 
+ 
+        }
+ 
+    } else {
+ 
+        alert("信息填写不全，无法添加");
+    }
+}
+ 
+ 
+ 
+ 
+</script>
+<body >
+<div id="tool">
+    <div id="f1" style="height: 45px;">
+        <p style="margin: 0;padding: 0 ;font-size: 40px;color:pink"><b>H5超级编辑器</b></p>
+    </div>
+ 
+    <div id="f2" style="height: 75px;">
+        <p style="text-align: left">
+            <canvas id="timeline" width="880" height="55" style="background-color: cornsilk;z-index:3 "></canvas>
+            <img id="wz" style="width: 45px;height: 30px" src="source/word.png"
+                 onmouseover="enterm(this);" onmouseout="outm(this);" onclick="djsj(this);"/>
+            <img id="tp" style="width: 45px;height: 30px" src="source/pic.png" onmouseover="enterm(this);"
+                 onmouseout="outm(this);" onclick="djsj(this);"/>
+            <img id="sp" style="width: 45px;height: 30px" src="source/sp.png" onmouseover="enterm(this);"
+                 onmouseout="outm(this);" onclick="djsj(this);"/>
+            <img id="tq" style="width: 45px;height: 30px" src="source/tq.png" onmouseover="enterm(this);"
+                 onmouseout="outm(this);" onclick="djsj(this);"/>
+            <img id="tb" style="width: 45px;height: 30px" src="source/tb.png" onmouseover="enterm(this);"
+                 onmouseout="outm(this);" onclick="djsj(this);"/>
+            <img id="yy" style="width: 45px;height: 30px" src="source/yy.png" onmouseover="enterm(this);"
+                 onmouseout="outm(this);" onclick="djsj(this);"/>
+            <img id="tx" style="width: 45px;height: 30px" src="source/tx.png" onmouseover="enterm(this);"
+                 onmouseout="outm(this);" onclick="djsj(this);"/>
+            <img id="jj" style="width: 45px;height: 30px" src="source/jj.png" onmouseover="enterm(this);"
+                 onmouseout="outm(this);" onclick="djsj(this);"/>
+ 
+ 
+        </p>
+ 
+    </div>
+</div>
+ 
+ 
+<div id="bd">
+ 
+    <div id="stage">
+        <canvas id="ycmb" style="text-align:center;position:absolute;z-index:2;left: 200px;top: 130px;width: 180;height: 400;" ></canvas>
+ 
+        <div id="fdtool"
+             style="text-align:center;position:absolute;z-index:2;left: 810px;top: 130px;width: 80px;height: 500px;background-color: pink" ondblclick="Drags(this);" onmousemove="movediv(this);" onmouseup=" tdsf();">
+            <p  style="cursor: pointer" onclick="ycgj();">[修改栏]</p>
+ 
+            <div id="xgid">
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="移动"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="旋转"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="缩放"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="删除"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="阴影"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="事件"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="动画"
+                   onclick="djgj(this)"/>
+            </div>
+        </div>
+        <div id="fdtool1"
+             style="text-align:center;position:absolute;z-index:2;left: 720px;top: 130px;width: 80px;height: 500px;background-color: pink" ondblclick="Drags(this);" onmousemove="movediv(this);"  onmouseup=" tdsf();">
+            <p style="cursor: pointer" onclick="ycgj1()">[控件栏]</p>
+            <div id="kjid">
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="图片"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="文字"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="视频"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="音乐"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="特效"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="天气"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="时间"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="股票"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="新闻"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="报表"
+                   onclick="djgj(this)"/>
+            <input style="margin: 3px;background-color: pink;height:35px;width: 42px" type="button" value="交互"
+                   onclick="djgj(this)"/>
+                </div>
+ 
+        </div>
+ 
+    </div>
+   <!--shuxin <div id="option" style="overflow-y: scroll">
+        <table border="5" font-color="cornsil" style="background-color: pink;border: 5px solid cornsilk;">
+            <caption>属性设置</caption>
+            <tr>
+                <th> X值</th>
+                <td><input type="text" style="width: 80px;height: 20px"/></td>
+            </tr>
+            <tr>
+                <th>Y值</th>
+                <td><input type="text" style="width: 80px;height: 20px"/></td>
+            </tr>
+            <tr>
+                <th> 颜色</th>
+                <td bgcolor="#ffc0cb" id="tst" style="width: 80px;height: 20px"><input type="color"
+                                                                                       onchange="ysz(this);"/></td>
+            </tr>
+            <tr>
+                <th>开关</th>
+                <td><select id="sxvisible">
+                    <option value="1" selected="selected">true</option>
+                    <option value="2">false</option>
+                </select></td>
+            </tr>
+            <tr>
+                <th>时间控件</th>
+                <td>
+                    <input type="month">
+                </td>
+            </tr>
+            <tr>
+                <th> image</th>
+                <td>
+                    <input type="image" src="up.png" style="width: 80px;height: 20px">
+                </td>
+            </tr>
+            <tr>
+                <th>datetime-local</th>
+                <td>
+                    <input type="datetime-local">
+                </td>
+            </tr>
+            <tr>
+                <th>进度条</th>
+                <td>
+                    <input type="range">
+                </td>
+            </tr>
+            <tr>
+                <th>search</th>
+                <td>
+                    <input type="search" style="width: 80px;height: 20px">
+                    <progress>
+                        <span id="objprogress">76</span>%
+                    </progress>
+                </td>
+            </tr>
+        </table>
+    </div>-->
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</div>
+ 
+<div id="tj"  width="200px"  style="position: absolute;left:900px;top:150px" id="option" style="overflow-y: scroll">
+ 
+    <input type="file" name="pic" accept="image/*" id="file" size="150" onchange="yl(this);"/>
+ 
+    <div id="tjb"></div>
+    <div id="sx" style=" overflow:scroll" align="right">
+ 
+        <p>x:<input type="text" value="50" onfocus="javascript:if(this.value=='50')this.value='';" id="sxx"/></p>
+ 
+        <p>y:<input type="text" value="50" onfocus="javascript:if(this.value=='50')this.value='';" id="sxy"/></p>
+ 
+        <p>w:<input type="text" value="50" onfocus="javascript:if(this.value=='50')this.value='';"  id="sxw"/></p>
+ 
+        <p>h:<input type="text" value="50" onfocus="javascript:if(this.value=='50')this.value='';" id="sxh"/></p>
+ 
+        <p>id:<input type="text"  value="50" onfocus="javascript:if(this.value=='50')this.value='';" id="sxid"/></p>
+ 
+        <p>src:<input style="background-color: rgba(146, 92, 153, 0.36)" type="text" readonly="readonly"
+                      id="sxsrc"/></p>
+ 
+        <p>alpha:<input type="range" min=0 max=100 name=tap id="sxtmd"onchange=""/>
+ 
+ 
+ 
+    </div>
+    <button id="bt" onclick="tjyj();">添加元件</button>
+</div>
+ 
+</body>
+</html>
